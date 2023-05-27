@@ -37,12 +37,12 @@ def aule_disponibili():
         response = []
         for result in cursor.stored_results():
             fetched= result.fetchall()
-            for tupla in fetched:
+            for row in fetched:
                 aula ={
-                    'id_aula': tupla[0],
-                    'nome' : tupla[1],
-                    'capacità' : tupla[2],
-                    'id_edificio' : tupla[3]
+                    'id_aula': row[0],
+                    'nome' : row[1],
+                    'capacità' : row[2],
+                    'id_edificio' : row[3]
                 }
                 response.append(aula)
         db.commit()
