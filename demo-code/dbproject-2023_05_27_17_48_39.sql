@@ -1,3 +1,7 @@
+Create database PrenotazioneAuleUniversitarie;
+use PrenotazioneAuleUniversitarie;
+
+
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: university_room_booking_system
@@ -7,7 +11,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,16 +25,16 @@
 
 DROP TABLE IF EXISTS `aula`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `aula` (
   `id_aula` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
-  `capacità` int NOT NULL,
+  `capacita` int NOT NULL,
   `id_edificio` int NOT NULL,
   PRIMARY KEY (`id_aula`),
   KEY `aule_ibfk_1` (`id_edificio`),
   CONSTRAINT `aula_ibfk_1` FOREIGN KEY (`id_edificio`) REFERENCES `edificio` (`id_edificio`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,9 +49,9 @@ UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -62,7 +66,7 @@ DELIMITER ;;
 
     IF num_edifici > 0 THEN
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'L''aula è già associata a un edificio diverso.';
+            SET MESSAGE_TEXT = 'L''aula è gia associata a un edificio diverso.';
     END IF;
 END */;;
 DELIMITER ;
@@ -77,7 +81,7 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `corso`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `corso` (
   `id_corso` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
@@ -86,7 +90,7 @@ CREATE TABLE `corso` (
   PRIMARY KEY (`id_corso`),
   KEY `id_utente` (`id_utente`),
   CONSTRAINT `corso_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id_utente`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,9 +105,9 @@ UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -131,7 +135,7 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `dipendente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `dipendente` (
   `id_dipendente` int NOT NULL AUTO_INCREMENT,
   `username_login` varchar(50) NOT NULL,
@@ -139,11 +143,11 @@ CREATE TABLE `dipendente` (
   `nome` varchar(50) NOT NULL,
   `cognome` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `id_università` int NOT NULL,
+  `id_universita` int NOT NULL,
   PRIMARY KEY (`id_dipendente`),
-  KEY `id_università` (`id_università`),
-  CONSTRAINT `dipendente_ibfk_1` FOREIGN KEY (`id_università`) REFERENCES `università` (`id_università`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `id_universita` (`id_universita`),
+  CONSTRAINT `dipendente_ibfk_1` FOREIGN KEY (`id_universita`) REFERENCES `universita` (`id_universita`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,18 +166,18 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `edificio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `edificio` (
   `id_edificio` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
   `cap` varchar(5) NOT NULL,
   `via` varchar(50) DEFAULT NULL,
   `civico` varchar(5) DEFAULT NULL,
-  `id_università` int NOT NULL,
+  `id_universita` int NOT NULL,
   PRIMARY KEY (`id_edificio`),
-  KEY `edifici_ibfk_1` (`id_università`),
-  CONSTRAINT `edificio_ibfk_1` FOREIGN KEY (`id_università`) REFERENCES `università` (`id_università`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `edifici_ibfk_1` (`id_universita`),
+  CONSTRAINT `edificio_ibfk_1` FOREIGN KEY (`id_universita`) REFERENCES `universita` (`id_universita`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,24 +192,24 @@ UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `controllo_piu_università_per_edificio` BEFORE INSERT ON `edificio` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `controllo_piu_universita_per_edificio` BEFORE INSERT ON `edificio` FOR EACH ROW BEGIN
     DECLARE num_proprietari INT;
 
-    -- Controlla il numero di proprietari università attivi per l'edificio
+    -- Controlla il numero di proprietari universita attivi per l'edificio
     SELECT COUNT(*) INTO num_proprietari
     FROM edificio
-    WHERE id_università = NEW.id_università
+    WHERE id_universita = NEW.id_universita
     AND id_edificio <> NEW.id_edificio;
 
     IF num_proprietari > 0 THEN
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'L''edificio ha già un proprietario università associato.';
+            SET MESSAGE_TEXT = 'L''edificio ha gia un proprietario universita associato.';
     END IF;
 END */;;
 DELIMITER ;
@@ -220,7 +224,7 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `prenotazione`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `prenotazione` (
   `id_prenotazione` int NOT NULL AUTO_INCREMENT,
   `id_aula` int NOT NULL,
@@ -237,7 +241,7 @@ CREATE TABLE `prenotazione` (
   CONSTRAINT `prenotazione_ibfk_1` FOREIGN KEY (`id_aula`) REFERENCES `aula` (`id_aula`) ON DELETE CASCADE,
   CONSTRAINT `prenotazione_ibfk_2` FOREIGN KEY (`id_utente`) REFERENCES `utente` (`id_utente`) ON DELETE CASCADE,
   CONSTRAINT `prenotazione_ibfk_3` FOREIGN KEY (`id_corso`) REFERENCES `corso` (`id_corso`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,9 +256,9 @@ UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -271,7 +275,7 @@ DELIMITER ;;
 
     IF num_prenotazioni > 0 THEN
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'L''utente ha già prenotato un''aula per lo stesso periodo.';
+            SET MESSAGE_TEXT = 'L''utente ha gia prenotato un''aula per lo stesso periodo.';
     END IF;
 END */;;
 DELIMITER ;
@@ -282,9 +286,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -292,19 +296,19 @@ DELIMITER ;;
     DECLARE aula_universita INT;
     DECLARE utente_universita INT;
 
-    SELECT un.id_università INTO aula_universita
+    SELECT un.id_universita INTO aula_universita
     FROM aula a
     INNER JOIN edificio e ON a.id_edificio = e.id_edificio
-    INNER JOIN università un on e.id_università = un.id_università
+    INNER JOIN universita un on e.id_universita = un.id_universita
     WHERE a.id_aula = NEW.id_aula;
 
-    SELECT ut.id_università INTO utente_universita
+    SELECT ut.id_universita INTO utente_universita
     FROM utente ut
     WHERE id_utente = NEW.id_utente;
 
     IF aula_universita <> utente_universita THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'L''utente e l''aula devono appartenere alla stessa università.';
+        SET MESSAGE_TEXT = 'L''utente e l''aula devono appartenere alla stessa universita.';
     END IF;
 END */;;
 DELIMITER ;
@@ -314,30 +318,30 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
--- Table structure for table `università`
+-- Table structure for table `universita`
 --
 
-DROP TABLE IF EXISTS `università`;
+DROP TABLE IF EXISTS `universita`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `università` (
-  `id_università` int NOT NULL AUTO_INCREMENT,
+/*!50503 SET character_set_client = utf8 */;
+CREATE TABLE `universita` (
+  `id_universita` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
   `cap` varchar(5) NOT NULL,
   `via` varchar(50) DEFAULT NULL,
   `civico` varchar(5) NOT NULL,
-  PRIMARY KEY (`id_università`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id_universita`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `università`
+-- Dumping data for table `universita`
 --
 
-LOCK TABLES `università` WRITE;
-/*!40000 ALTER TABLE `università` DISABLE KEYS */;
-INSERT INTO `università` VALUES (1,'Università degli Studi di Milano','20122','Via Festa del Perdono','7'),(2,'Università degli Studi di Trieste','34127','Via Alfonso Valerio','22'),(3,'Università dei Geni','34100','Via Leonardo da Vinci','3'),(4,'Università degli Studi di Udine','33100','Via delle Scienze','206');
-/*!40000 ALTER TABLE `università` ENABLE KEYS */;
+LOCK TABLES `universita` WRITE;
+/*!40000 ALTER TABLE `universita` DISABLE KEYS */;
+INSERT INTO `universita` VALUES (1,'universita degli Studi di Milano','20122','Via Festa del Perdono','7'),(2,'universita degli Studi di Trieste','34127','Via Alfonso Valerio','22'),(3,'universita dei Geni','34100','Via Leonardo da Vinci','3'),(4,'universita degli Studi di Udine','33100','Via delle Scienze','206');
+/*!40000 ALTER TABLE `universita` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -346,7 +350,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `utente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `utente` (
   `id_utente` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) NOT NULL,
@@ -354,11 +358,11 @@ CREATE TABLE `utente` (
   `email` varchar(50) DEFAULT NULL,
   `tipo` enum('Docente','Altro') DEFAULT NULL,
   `matricola` varchar(50) DEFAULT NULL,
-  `id_università` int NOT NULL,
+  `id_universita` int NOT NULL,
   PRIMARY KEY (`id_utente`),
-  KEY `utenti_ibfk_1` (`id_università`),
-  CONSTRAINT `utente_ibfk_1` FOREIGN KEY (`id_università`) REFERENCES `università` (`id_università`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `utenti_ibfk_1` (`id_universita`),
+  CONSTRAINT `utente_ibfk_1` FOREIGN KEY (`id_universita`) REFERENCES `universita` (`id_universita`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
