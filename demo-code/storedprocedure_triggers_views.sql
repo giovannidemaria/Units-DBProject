@@ -12,10 +12,10 @@ BEGIN
     DECLARE startTimeOverlap TIME;
     DECLARE endTimeOverlap TIME;
 
-    -- Ottieni l'ID dell'università
-    SELECT id_università
+    -- Ottieni l'ID dell'universita
+    SELECT id_universita
     INTO universityId
-    FROM università
+    FROM universita
     WHERE nome = universityName;
 
     -- Ottieni l'ora di inizio e l'ora di fine sovrapposte delle prenotazioni
@@ -26,8 +26,8 @@ BEGIN
                       FROM aula
                       WHERE id_edificio IN (SELECT id_edificio
                                             FROM edificio
-                                            WHERE id_università = universityId)
-                        AND capacità >= capacity)
+                                            WHERE id_universita = universityId)
+                        AND capacita >= capacity)
       AND data = bookingDate
       AND ora_inizio < endTime;
 
@@ -38,8 +38,8 @@ BEGIN
                       FROM aula
                       WHERE id_edificio IN (SELECT id_edificio
                                             FROM edificio
-                                            WHERE id_università = universityId)
-                        AND capacità >= capacity)
+                                            WHERE id_universita = universityId)
+                        AND capacita >= capacity)
       AND data = bookingDate
       AND ora_fine > startTime;
 
@@ -48,8 +48,8 @@ BEGIN
     FROM aula
     WHERE id_edificio IN (SELECT id_edificio
                           FROM edificio
-                          WHERE id_università = universityId)
-      AND capacità >= capacity
+                          WHERE id_universita = universityId)
+      AND capacita >= capacity
       AND id_aula NOT IN (SELECT id_aula
                           FROM prenotazione
                           WHERE data = bookingDate
@@ -66,7 +66,7 @@ END //
 DELIMITER ;
 
 
-#CALL AuleDisponibili('Università degli Studi di Milano', 100, '2023-05-10', '14:00:00', '16:00:00');
+#CALL AuleDisponibili('universita degli Studi di Milano', 100, '2023-05-10', '14:00:00', '16:00:00');
 
 DELIMITER //
 
@@ -197,6 +197,9 @@ DELIMITER ;
 #CALL ElencoPrenotazioniAula('2010-05-16', '2023-05-18', 2);
 
 /*
+
+QUESTA PARTE VIENE COMMENTATA PERCHE' GIA' DEFINITA NEL FILE export.sql. SI INDICA NUOVAMENTE PER CHIAREZZA.
+
 DELIMITER //
 
 CREATE TRIGGER controllo_associazione_corsi_docenti
@@ -209,9 +212,9 @@ BEGIN
     FROM utente
     WHERE id_utente = NEW.id_utente;
 
-    IF user_role <> 'Docenti' THEN
+    IF user_role <> 'Docente' THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Solo gli utenti con ruolo "Docenti" possono essere associati a un corso.';
+        SET MESSAGE_TEXT = 'Solo gli utenti con ruolo "Docente" possono essere associati a un corso.';
     END IF;
 END //
 
@@ -240,21 +243,21 @@ END //
 
 DELIMITER //
 
-CREATE TRIGGER controllo_piu_università_per_edificio
+CREATE TRIGGER controllo_piu_universita_per_edificio
 BEFORE INSERT ON edificio
 FOR EACH ROW
 BEGIN
     DECLARE num_proprietari INT;
 
-    -- Controlla il numero di proprietari università attivi per l'edificio
+    -- Controlla il numero di proprietari universita attivi per l'edificio
     SELECT COUNT(*) INTO num_proprietari
     FROM edificio
-    WHERE id_università = NEW.id_università
+    WHERE id_universita = NEW.id_universita
     AND id_edificio <> NEW.id_edificio;
 
     IF num_proprietari > 0 THEN
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'L''edificio ha già un proprietario università associato.';
+            SET MESSAGE_TEXT = 'L''edificio ha già un proprietario universita associato.';
     END IF;
 END //
 
@@ -284,19 +287,19 @@ BEGIN
     DECLARE aula_universita INT;
     DECLARE utente_universita INT;
 
-    SELECT un.id_università INTO aula_universita
+    SELECT un.id_universita INTO aula_universita
     FROM aula a
     INNER JOIN edificio e ON a.id_edificio = e.id_edificio
-    INNER JOIN università un on e.id_università = un.id_università
+    INNER JOIN universita un on e.id_universita = un.id_universita
     WHERE a.id_aula = NEW.id_aula;
 
-    SELECT ut.id_università INTO utente_universita
+    SELECT ut.id_universita INTO utente_universita
     FROM utente ut
     WHERE id_utente = NEW.id_utente;
 
     IF aula_universita <> utente_universita THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'L''utente e l''aula devono appartenere alla stessa università.';
+        SET MESSAGE_TEXT = 'L''utente e l''aula devono appartenere alla stessa universita.';
     END IF;
 END;
 
@@ -316,59 +319,58 @@ SELECT prenotazione.id_prenotazione AS ID,
        prenotazione.ora_inizio      AS OraInizio,
        prenotazione.ora_fine        AS OraFine,
        prenotazione.descrizione     AS Descrizione,aula.nome AS Aula,
-       edificio.nome                AS Edificio,università.nome As Università ,c.nome AS Corso,concat(utente.nome,' ', utente.cognome ) AS UtenteResponsabile
+       edificio.nome                AS Edificio,universita.nome As universita ,c.nome AS Corso,concat(utente.nome,' ', utente.cognome ) AS UtenteResponsabile
 FROM prenotazione
 JOIN aula ON prenotazione.id_aula = aula.id_aula
 JOIN edificio ON aula.id_edificio = edificio.id_edificio
 JOIN utente ON prenotazione.id_utente = utente.id_utente
 LEFT JOIN corso c on utente.id_utente = c.id_utente
-JOIN università ON edificio.id_università = università.id_università;
+JOIN universita ON edificio.id_universita = universita.id_universita;
 
 CREATE VIEW ElencoAule AS
 SELECT aula.id_aula  AS ID,
        aula.nome     AS Aula,
-       edificio.nome AS Edificio,università.nome AS Università,CONCAT(edificio.via,' ' , edificio.civico,', ', edificio.cap) AS Indirizzo
+       edificio.nome AS Edificio,universita.nome AS universita,CONCAT(edificio.via,' ' , edificio.civico,', ', edificio.cap) AS Indirizzo
 FROM aula
 JOIN edificio ON aula.id_edificio = edificio.id_edificio
-JOIN università ON edificio.id_università = università.id_università;
+JOIN universita ON edificio.id_universita = universita.id_universita;
 
 CREATE VIEW ElencoDocenti AS
 SELECT utente.id_utente AS ID ,
-       utente.nome      AS Nome,utente.cognome AS Cognome,utente.email AS Email,utente.matricola AS Matricola,università.nome AS UniversitàAffiliazione
+       utente.nome      AS Nome,utente.cognome AS Cognome,utente.email AS Email,utente.matricola AS Matricola,universita.nome AS universitaAffiliazione
 FROM utente
-LEFT JOIN università ON utente.id_università = università.id_università
+LEFT JOIN universita ON utente.id_universita = universita.id_universita
 WHERE utente.tipo = 'Docente';
 
 CREATE VIEW ElencoNonDocenti AS
-SELECT utente.id_utente AS ID,utente.nome AS Nome,utente.cognome AS Cognome,utente.email AS Email,utente.matricola AS Matricola,università.nome AS UniversitàAffiliazione
+SELECT utente.id_utente AS ID,utente.nome AS Nome,utente.cognome AS Cognome,utente.email AS Email,utente.matricola AS Matricola,universita.nome AS universitaAffiliazione
 FROM utente
-LEFT JOIN università ON utente.id_università = università.id_università
+LEFT JOIN universita ON utente.id_universita = universita.id_universita
 WHERE utente.tipo = 'Altro';
 
 CREATE VIEW ElencoCorsi AS
-SELECT c.id_utente AS ID ,c.nome AS nomeCorso, c.descrizione, CONCAT(u.nome, ' ', u.cognome) AS docente, un.nome AS UniversitàAffiliazione
+SELECT c.id_utente AS ID ,c.nome AS nomeCorso, c.descrizione, CONCAT(u.nome, ' ', u.cognome) AS docente, un.nome AS universitaAffiliazione
 FROM corso c
 JOIN utente u ON c.id_utente = u.id_utente
-JOIN università un ON u.id_università = un.id_università;
+JOIN universita un ON u.id_universita = un.id_universita;
 
 CREATE VIEW ElencoDipendenti AS
 SELECT dipendente.id_dipendente AS ID,
-       dipendente.nome          AS Nome,dipendente.cognome AS Cognome,dipendente.email AS Email,u.nome AS UniversitàAffiliazione
+       dipendente.nome          AS Nome,dipendente.cognome AS Cognome,dipendente.email AS Email,u.nome AS universitaAffiliazione
 FROM dipendente
-JOIN università u on u.id_università = dipendente.id_università;
+JOIN universita u on u.id_universita = dipendente.id_universita;
 
 CREATE VIEW ElencoEdifici AS
 SELECT edificio.id_edificio AS ID ,
-       edificio.nome        AS Edificio,università.nome AS Università,CONCAT(edificio.via,' ' , edificio.civico,', ', edificio.cap) AS Indirizzo
+       edificio.nome        AS Edificio,universita.nome AS universita,CONCAT(edificio.via,' ' , edificio.civico,', ', edificio.cap) AS Indirizzo
 FROM edificio
-JOIN università ON edificio.id_università = università.id_università;
+JOIN universita ON edificio.id_universita = universita.id_universita;
 
-CREATE View ElencoUniversità AS
-SELECT università.id_università AS ID,università.nome AS Università, CONCAT(università.via,' ' ,università.civico,', ', università.cap) AS Indirizzo
-FROM università;
+CREATE View Elencouniversita AS
+SELECT universita.id_universita AS ID,universita.nome AS universita, CONCAT(universita.via,' ' ,universita.civico,', ', universita.cap) AS Indirizzo
+FROM universita;
 
-/*
 create user 'utente'@'localhost' identified by 'password';
 grant all privileges on PrenotazioneAuleUniversitarie.* to 'utente'@'localhost';
 flush privileges;
- */
+
