@@ -118,9 +118,9 @@ DELIMITER ;;
     FROM utente
     WHERE id_utente = NEW.id_utente;
 
-    IF user_role <> 'Docenti' THEN
+    IF user_role <> 'Docente' THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Solo gli utenti con ruolo "Docenti" possono essere associati a un corso.';
+        SET MESSAGE_TEXT = 'Solo gli utenti con ruolo "Docente" possono essere associati a un corso.';
     END IF;
 END */;;
 DELIMITER ;
