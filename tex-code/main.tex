@@ -412,7 +412,7 @@ La stored procedure "\texttt{ElencoPrenotazioniAula()}" restituisce un elenco de
 
 \subsubsection*{\texttt{ElencoPrenotazioniUtente()}}
 
-La stored procedure "\texttt{ElencoPrenotazioniUtente()}" prende in input il nome di un utente (indifferente se docente o altro) e due date, e restituisce tutte le prenotazioni di aule effettuate dal docente nell'intervallo di tempo specificato.
+La stored procedure "\texttt{ElencoPrenotazioniUtente()}" prende in input l'ID di un utente (indifferente se docente o altro) e due date, e restituisce tutte le prenotazioni di aule effettuate nell'intervallo di tempo specificato.
 
 \subsubsection*{Nomi dei parametri}
 
@@ -445,7 +445,7 @@ All'interno della procedura, vengono eseguiti controlli per verificare la dispon
 
 Inoltre, viene controllata l'esistenza delle righe corrispondenti ai valori specificati di AulaID, UtenteID e CorsoID nelle tabelle "aule", "utenti" e "corsi" rispettivamente, prima di eseguire l'inserimento di una nuova riga nella tabella "prenotazioni". Ciò è importante per garantire la consistenza dei dati nel database. Senza questa verifica, potrebbero verificarsi problemi di consistenza se si inseriscono righe nella tabella "prenotazioni" che fanno riferimento a valori di AulaID, UtenteID o CorsoID non esistenti nelle tabelle corrispondenti.\\
 
-La stored procedure "PrenotaAule" contribuisce a semplificare il processo di prenotazione delle aule, garantendo che le prenotazioni siano gestite correttamente e prevenendo sovrapposizioni o doppie prenotazioni.
+La stored procedure "\texttt{PrenotaAule()}" contribuisce a semplificare il processo di prenotazione delle aule, garantendo che le prenotazioni siano gestite correttamente e prevenendo sovrapposizioni o doppie prenotazioni.
 
 \subsubsection*{Nomi dei parametri}
 
