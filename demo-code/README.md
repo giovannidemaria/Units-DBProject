@@ -1,8 +1,7 @@
 # Demo app
 
-Per costruire il container ed eseguirlo, lanciare i seguenti comandi:
+Per costruire il container ed eseguirlo, lanciare il seguente comando:
 
 ```bash
-docker build -t dbprojectunits .
-docker run -p 5000:5000 dbprojectunits
+docker build -t dbprojectunits . && docker run -p 5000:5000 dbprojectunits
 ```
