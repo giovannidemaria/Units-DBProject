@@ -1,3 +1,5 @@
+use PrenotazioneAuleUniversitarie;
+
 DELIMITER //
 
 CREATE PROCEDURE AuleDisponibili(
