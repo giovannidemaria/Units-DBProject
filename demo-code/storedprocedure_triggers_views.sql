@@ -368,7 +368,7 @@ SELECT edificio.id_edificio AS ID ,
 FROM edificio
 JOIN universita ON edificio.id_universita = universita.id_universita;
 
-CREATE View Elencouniversita AS
+CREATE View ElencoUniversita AS
 SELECT universita.id_universita AS ID,universita.nome AS universita, CONCAT(universita.via,' ' ,universita.civico,', ', universita.cap) AS Indirizzo
 FROM universita;
 
