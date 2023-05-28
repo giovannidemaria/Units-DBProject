@@ -15,7 +15,7 @@ echo "*****************************************"
 echo
 
 mysql -u root < export.sql && echo "Import of 'export.sql' successful"
-mysql -u root < storedprocedure_triggers_views.sql && echo "Import of 'storedprocedure_triggers_views.sql' successful"
+mysql -u root < routines_viste_userAdmin.sql && echo "Import of 'routines_viste_userAdmin.sql' successful"
 
 echo
 echo "*****************************************"
