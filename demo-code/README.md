@@ -1,6 +1,6 @@
 # Demo app
 
-Usare i seguenti comandi docker:
+Per costruire il container ed eseguirlo, lanciare i seguenti comandi:
 
 ```bash
 docker build -t dbprojectunits .
