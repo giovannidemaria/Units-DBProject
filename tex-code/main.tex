@@ -375,7 +375,7 @@ Questo trigger viene eseguito prima dell'inserimento di una nuova riga nella tab
 \subsubsection*{\texttt{controllo\_piu\_università\_per\_edificio}}
 Questo trigger viene eseguito prima dell'inserimento di una nuova riga nella tabella "Edifici". Controlla se l'edificio è già associato a un'altra università. Se viene rilevata un'associazione esistente, viene generata un'eccezione.
 
-\subsubsection*{\texttt{controllo\_piu\_edifici\_per\_aula}}
+\subsubsection*{\texttt{aula\_edificio}}
 
 Questo trigger viene eseguito prima dell'inserimento di una nuova riga nella tabella "Aule". Controlla se l'aula è già associata a un altro edificio. Se viene rilevata un'associazione esistente, viene generata un'eccezione.
 
@@ -430,7 +430,7 @@ La stored procedure "\texttt{AnnullaPrenotazione()}" consente di annullare una p
 
 \end{enumerate}
 
-La stored procedure "AnnullaPrenotazione()" è utile per gestire situazioni in cui un'aula non è più disponibile per una prenotazione effettuata in precedenza, consentendo agli utenti di liberare l'aula e rendendola nuovamente disponibile per altre prenotazioni.
+La stored procedure "\texttt{AnnullaPrenotazione()}" è utile per gestire situazioni in cui un'aula non è più disponibile per una prenotazione effettuata in precedenza, consentendo agli utenti di liberare l'aula e rendendola nuovamente disponibile per altre prenotazioni.
 
 
 \subsubsection*{Nomi dei parametri}
