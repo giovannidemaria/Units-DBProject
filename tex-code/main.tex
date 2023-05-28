@@ -80,7 +80,7 @@ Il sistema sarà gestito dal personale amministrativo di ogni università che av
 
 \begin{figure}[h]
   \centering
-\includegraphics[width=1.0\textwidth]{Diagramma\_Entity\_Relationship\_Progetto2705.png}
+\includegraphics[width=1.0\textwidth]{Diagramma\_Entity\_Relationship\_Progetto2805.png}
   \caption{Schema entity - relationship}
   Gli identificatori sono stati evidenziati in ciano.\\
 \end{figure}
@@ -156,7 +156,7 @@ Responsabilità& Un utente ha la responsabilità di una prenotazione & Utente, P
 
 \hline
 
-Affiliazione & Un utente è affiliato a un'Università & Utente, Università & / \\
+Affiliazione & Un utente o un dipendente è affiliato a un'Università&Dipendente, Utente, Università & / \\
 
 \hline
 
@@ -166,16 +166,12 @@ Luogo & Un corso è insegnato in un'Università & Corso, Università & / \\
 
 Modifica & Un dipendente modifica una prenotazione, un'aula, un utente, un corso o un edificio & dipendente, Prenotazione, Aula, Utente, Edificio & / \\
 
-\hline
-
-Affiliazione & Un dipendente è affiliato a un'Università & dipendente, Università & /
 
 \end{tabular}
 \caption{Relationships}
 
 \end{table}
 
-\newpage
 \section{Gruppi di frasi omogenee}
 
 \begin{enumerate}
@@ -308,8 +304,10 @@ Affiliazione & Un dipendente è affiliato a un'Università & dipendente, Univers
     Nel caso delle aule, dei corsi e delle prenotazioni, invece, l'informazione sull'Università può essere ottenuta attraverso delle relazioni:
     
     \begin{enumerate}
-        \item Edificio a cui appartiene l'Aula. Ad esempio, l'Università associata a un'aula può essere recuperata attraverso la relazione tra Aula ed Edificio, che a sua volta ha un identificatore di Università associato ad esso.
-        \item Università d'appartenenza di un utente. Ad esempio, l'identificatore "id\_università" nella tabella "prenotazioni" può essere ottenuto attraverso la relazione tra la Prenotazione e l'Utente associato, che a sua volta appartiene a una determinata Università. Lo stesso discorso si applica anche ai Corsi. Tuttavia, non si tratta di una ridondanza "dannosa" in quanto può risultare comoda per le query e le operazioni di join sul database, consentendo di estrarre le informazioni relative all'università di appartenenza senza dover effettuare una serie di join tra le tabelle. Però, per evitare stati indesiderati, si preferisce sopprimere il campo "id\_università" nelle tabelle corsi e prenotazioni.
+        \item Edificio a cui appartiene l'Aula. Ad esempio, l'Università associata a un'aula può essere recuperata attraverso la relazione tra Aula ed Edificio, che a sua volta ha un identificatore di Università associato ad esso. \item Università d'appartenenza di un utente. Ad esempio, l'identificatore "id\_università" nella tabella "prenotazioni" può essere ottenuto attraverso la relazione tra la Prenotazione e l'Utente associato, che a sua volta appartiene a una determinata Università.
+        \item Lo stesso discorso si applica anche ai Corsi. Tuttavia, non si tratta di una ridondanza "dannosa" in quanto può risultare comoda per le query e le operazioni di join sul database, consentendo di estrarre le informazioni relative all'università di appartenenza senza dover effettuare una serie di join tra le tabelle. Però, per evitare stati indesiderati, si preferisce sopprimere il campo "id\_università" nelle tabelle corsi e prenotazioni (si può quindi sopprimere anche la relationship "Luogo").
+        
+        
     \end{enumerate}
 \end{itemize}
 
@@ -331,7 +329,7 @@ Questa scelta implica la necessità di andare ad inserire un vincolo (Trigger) c
 
 \begin{figure}[h]
   \centering
-\includegraphics[width=1.0\textwidth]{Diagramma\_Entity\_Relationship\_Ristrutturato\_Progetto2705.png}
+\includegraphics[width=1.0\textwidth]{Diagramma\_Entity\_Relationship\_Ristrutturato\_Progetto2805.png}
   \caption{Schema entity - relationship ristrutturato}
     Gli identificatori sono stati evidenziati in ciano.\\
 \end{figure}
@@ -494,9 +492,9 @@ La decisione di non implementare il backend per la segreteria nella demo è prin
 
 In questa applicazione si evita totalmente con le Stored Procedures di fare concatenazione di stringhe perché potrebbe comportare a delle SQL injections. Per quanto riguarda invece le viste, viene effettuato un controllo sull'input.\\
 
-Vengono utilizzate le transazioni per eseguire le stored procedure. Sono importanti soprattutto per quelle che comportano un cambiamento dello stato del database (\texttt{PrenotaAula()} e \texttt{AnnullaPrenotazione()}). Le transazioni sono un meccanismo fondamentale per garantire l'integrità e la coerenza dei dati all'interno di un database. Si ricorda in particolare che sono fondamentali per garantire che le modifiche siano eseguite in modo atomico, coerente, isolato e durevole, seguendo il principio ACID.
+Vengono utilizzate le transazioni. Sono importanti soprattutto per le stored procedure che comportano un cambiamento dello stato del database (\texttt{PrenotaAula()} e \texttt{AnnullaPrenotazione()}). Le transazioni sono un meccanismo fondamentale per garantire l'integrità e la coerenza dei dati all'interno di un database. Si ricorda in particolare che sono fondamentali per garantire che le modifiche siano eseguite in modo atomico, coerente, isolato e durevole, seguendo il principio ACID.\\
 
-Si specifica infine che in realtà il database ha una piccola differenza rispetto a quello descritto nel documento: per motivi legati di codifica si sceglie di usare parole senza la a accentata (\texttt{à}). Viene sostituita con la a normale senza l'accento (\texttt{a}).
+Si specifica infine che in realtà il database ha una piccola differenza rispetto a quello descritto nel documento: per motivi legati alla codifica si sceglie di usare parole senza la a accentata (\texttt{à}). Viene sostituita con la a normale senza l'accento (\texttt{a}).
 
 \subsection{Funzionamento}
 
